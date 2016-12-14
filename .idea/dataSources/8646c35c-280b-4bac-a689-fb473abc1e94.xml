@@ -17,7 +17,7 @@
     <table id="11" parent="2" name="address"/>
     <table id="12" parent="2" name="chat"/>
     <table id="13" parent="2" name="event"/>
-    <table id="14" parent="2" name="event_organisator"/>
+    <table id="14" parent="2" name="event_organizator"/>
     <table id="15" parent="2" name="institution"/>
     <table id="16" parent="2" name="message"/>
     <table id="17" parent="2" name="message_chat_user"/>
@@ -155,14 +155,14 @@ district</ColNames>
 institution_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="48" parent="14" name="event_organisator_ibfk_1">
+    <foreign-key id="48" parent="14" name="event_organizator_ibfk_1">
       <ColNames>event_id</ColNames>
       <RefSchemaName>2sofk</RefSchemaName>
       <RefTableName>event</RefTableName>
       <RefColNames>event_id</RefColNames>
       <OnDelete>delete</OnDelete>
     </foreign-key>
-    <foreign-key id="49" parent="14" name="event_organisator_ibfk_2">
+    <foreign-key id="49" parent="14" name="event_organizator_ibfk_2">
       <ColNames>institution_id</ColNames>
       <RefSchemaName>2sofk</RefSchemaName>
       <RefTableName>institution</RefTableName>
