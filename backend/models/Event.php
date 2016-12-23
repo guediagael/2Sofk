@@ -50,6 +50,11 @@ class Event extends Model
      */
     public function setEventName($event_name)
     {
+        if (strlen($event_name)<5 && strlen($event_name)>25){
+            throw new InvalidArgumentException(
+                 json_encode("Even too short or too long")
+            );
+        }
         $this->event_name = $event_name;
     }
 
@@ -170,6 +175,22 @@ class Event extends Model
         );
 
        //TODO: add a list of event type to the validator
+    }
+
+
+    public function getEventInfo($id){
+        $data=[
+          $this->getEventName(),
+            $this->getBegin(),
+            $this->getEnd(),
+            $this->getDate(),
+            $this->getType(),
+            $this->getChatId(),
+
+
+        ];
+
+        return $data;
     }
 
 
