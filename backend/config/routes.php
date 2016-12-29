@@ -58,6 +58,33 @@ $router->addGet('/:controller/a/:action',
         'action'=>2
     ]);
 //
+/*
+ * add a new user
+ */
+$router->addPost(
+    "/:controller/:action/{nickname:[a-z]+}/{email:[a-z]+}/{phone:[0-9]+}/{password}"
+/* [
+     "controller"=>1,
+     "action"=>2,
+     "nickname"=>3,
+     "email"=>4,
+     "phone"=>5,
+     "password"=>6,
+ ]*/
+);
+
+$router->addGet('/:controller/:action', array(
+    'controller'    => 1,
+    'action'        => 2,
+
+));
+$router->addDelete('/:controller/:action/:id/:nickname', array(
+
+    /*'controller'    => 1,
+        'action'        => 2,
+        'id' =>3,
+        'nickname' => 4*/
+));
 ////edit event
 //$router->addPut(
 //    "/events/edit/{id:[0-9]+}/{name:[a-zA-Z0-9\-]+}/{type:[a-zA-Z0-9\-]+}/{date:[a-zA-Z0-9\-]+}/{startTime:[0-9]+}/{endTime:[0-9]+}",
