@@ -13,6 +13,16 @@ class Chat extends Model{
 
     private $chat_id;
     private $chat_name;
+
+
+    public function initialize()
+    {
+        $this->belongsTo('chat_id','Establishment','chat_id');
+        $this->belongsTo('chat_id','Event','chat_id');
+
+    }
+
+
     /**
      * @return mixed
      */
@@ -24,10 +34,10 @@ class Chat extends Model{
     /**
      * @param mixed $chat_id
      */
-    public function setChatId($chat_id)
-    {
-        $this->chat_id = $chat_id;
-    }
+//    public function setChatId($chat_id)
+//    {
+//        $this->chat_id = $chat_id;
+//    }
 
     /**
      * @return mixed

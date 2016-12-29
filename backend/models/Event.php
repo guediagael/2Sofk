@@ -8,7 +8,7 @@
  */
 use Phalcon\Mvc\Model;
 use Phalcon\Validation;
-
+use Phalcon\Validation\Validator\PresenceOf;
 //use Phalcon\Validation\Validator\Uniqueness as Unique;
 
 class Event extends Model
@@ -20,6 +20,34 @@ class Event extends Model
     private $begin;
     private $end;
     private $chat_id;
+    private $establishment_id;
+
+
+    public function initialize()
+    {
+        $this->hasOne(
+            'chat_id',
+            'Chat',
+            'chat_id',
+            [
+                'foreignKey'=>[
+                    'action'=>Relation::ACTION_CASCADE,
+                ]
+            ]
+        );
+
+        $this->hasOne(
+            'establishment_id',
+            'EventOrganizator',
+            'establishment_id'
+        );
+
+//        $this->belongsTo(
+//            'establishment_id',
+//            'Establis'
+//        )
+
+    }
 
     /**
      * @return mixed
@@ -87,12 +115,12 @@ class Event extends Model
      */
     public function setDate($date)
     {
-        $selectedDate = strtotime($date);
-        if (date_diff(date(),date('Y-m-d',$selectedDate))>=0){
+//        $selectedDate = strtotime($date);
+//        if (date_diff(date(),date('Y-m-d',$selectedDate))>=0){
             $this->date = $date;
-        }else{
-            json_encode('please select a latter date') ;
-        }
+//        }else{
+//            json_encode('please select a latter date') ;
+//        }
 
 
     }
@@ -145,10 +173,28 @@ class Event extends Model
     /**
      * @param mixed $chat_id
      */
-//    public function setChatId($chat_id)
-//    {
-//        $this->chat_id = $chat_id;
-//    }
+    public function setChatId($chat_id)
+    {
+        $this->chat_id = $chat_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEstablishmentId()
+    {
+        return $this->establishment_id;
+    }
+
+    /**
+     * @param mixed $establishment_id
+     */
+    public function setEstablishmentId($establishment_id)
+    {
+        $this->establishment_id = $establishment_id;
+    }
+
+
 
 
     public function validation(){

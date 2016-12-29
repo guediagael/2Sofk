@@ -12,8 +12,11 @@ class EventOrganizator extends Model
 {
 
     private $event_id;
-    private $institution_id;
+    private $establishment_id;
     private $rating;
+
+
+
 
     /**
      * @return mixed
@@ -34,17 +37,17 @@ class EventOrganizator extends Model
     /**
      * @return mixed
      */
-    public function getInstitutionId()
+    public function getEstablishmentId()
     {
-        return $this->institution_id;
+        return $this->establishment_id;
     }
 
     /**
-     * @param mixed $institution_id
+     * @param mixed $establishment_id
      */
-    public function setInstitutionId($institution_id)
+    public function setEstablishmentId($establishment_id)
     {
-        $this->institution_id = $institution_id;
+        $this->establishment_id = $establishment_id;
     }
 
     /**
