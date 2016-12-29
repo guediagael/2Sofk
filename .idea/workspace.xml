@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="139f34b2-704b-4471-94b5-cb3c1dc33b03" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/backend/controllers/EstablishmentController.php" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/backend/controllers/InstitutionController.php" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/2Sofk.iml" afterPath="$PROJECT_DIR$/.idea/TuSofk.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/backend/models/Institution.php" afterPath="$PROJECT_DIR$/backend/models/Establishment.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/8646c35c-280b-4bac-a689-fb473abc1e94.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/8646c35c-280b-4bac-a689-fb473abc1e94.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/controllers/EventController.php" afterPath="$PROJECT_DIR$/backend/controllers/EventController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/controllers/EventOrganizatorController.php" afterPath="$PROJECT_DIR$/backend/controllers/EventOrganizatorController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/models/Chat.php" afterPath="$PROJECT_DIR$/backend/models/Chat.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/models/Event.php" afterPath="$PROJECT_DIR$/backend/models/Event.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/models/EventOrganizator.php" afterPath="$PROJECT_DIR$/backend/models/EventOrganizator.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -139,10 +128,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Event.php" pinned="false" current-in-tab="true">
+          <file leaf-file-name="Event.php" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/backend/models/Event.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-245">
+                <state relative-caret-position="-908">
                   <caret line="44" column="10" lean-forward="false" selection-start-line="44" selection-start-column="10" selection-end-line="47" selection-end-column="11" />
                   <folding>
                     <element signature="e#92#114#0#PHP" expanded="true" />
@@ -164,7 +153,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="services.php" pinned="false" current-in-tab="false">
+          <file leaf-file-name="services.php" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/backend/config/services.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="68">
@@ -177,7 +166,7 @@
           <file leaf-file-name="EventController.php" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/backend/controllers/EventController.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1088">
+                <state relative-caret-position="289">
                   <caret line="67" column="37" lean-forward="false" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
                   <folding>
                     <element signature="e#6#33#0#PHP" expanded="true" />
@@ -1596,7 +1585,7 @@
       <workItem from="1482739789482" duration="8922000" />
       <workItem from="1482830781218" duration="40000" />
       <workItem from="1482830962934" duration="14713000" />
-      <workItem from="1483007243491" duration="683000" />
+      <workItem from="1483007243491" duration="1425000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1481639912721</created>
@@ -1619,11 +1608,18 @@
       <option name="project" value="LOCAL" />
       <updated>1482457789769</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Chat-&#10;Changed institution to Establishment&#10;EventController&#10;EventOrganizator&#10;">
+      <created>1483008025584</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1483008025584</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="117225000" />
+    <option name="totallyTimeSpent" value="117967000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1636,9 +1632,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15506808" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15506808" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.408" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13464448" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1670,7 +1666,8 @@
     <MESSAGE value="test" />
     <MESSAGE value="5  controllers (Chat,Event, Event organizator, Institution, Message)&#10;5 models for from the controllers above." />
     <MESSAGE value="NOthing is showing&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="NOthing is showing&#10;" />
+    <MESSAGE value="Chat-&#10;Changed institution to Establishment&#10;EventController&#10;EventOrganizator&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chat-&#10;Changed institution to Establishment&#10;EventController&#10;EventOrganizator&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1948,14 +1945,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/config/services.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/controllers/IndexController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -1998,16 +1987,6 @@
         <state relative-caret-position="306">
           <caret line="23" column="34" lean-forward="false" selection-start-line="23" selection-start-column="34" selection-end-line="23" selection-end-column="34" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/controllers/EventController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1088">
-          <caret line="67" column="37" lean-forward="false" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
-          <folding>
-            <element signature="e#6#33#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2105,12 +2084,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/models/Event.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-245">
+        <state relative-caret-position="-908">
           <caret line="44" column="10" lean-forward="false" selection-start-line="44" selection-start-column="10" selection-end-line="47" selection-end-column="11" />
           <folding>
             <element signature="e#92#114#0#PHP" expanded="true" />
             <marker date="1483007887199" expanded="true" signature="861:951" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/controllers/EventController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="67" column="37" lean-forward="false" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
+          <folding>
+            <element signature="e#6#33#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/config/services.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
