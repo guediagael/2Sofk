@@ -8,11 +8,13 @@
  */
 
 use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness as UniquenessValidator;
 
 class Chat extends Model{
 
-    private $chat_id;
-    private $chat_name;
+    protected $chat_id;
+    protected $chat_name;
 
 
     public function initialize()
@@ -55,6 +57,22 @@ class Chat extends Model{
         $this->chat_name = $chat_name;
     }
 
-
+    /**
+     * chat validation
+     */
+ public function Validation()
+ {
+     $validator=new Validation();
+     $validator->add(
+         'chat_name',
+         new UniquenessValidator(
+             [
+                 'model' => $this,
+                 'message' => 'chat name unavailable'
+             ]
+         )
+     );
+     return $this->validate($validator);
+ }
 
 }

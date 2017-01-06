@@ -1,46 +1,74 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: TheLetch
- * Date: 13/12/2016
- * Time: 17:56
- */
-use Phalcon\Mvc\Model;
-use Phalcon\Validation;
-use Phalcon\Validation\Validator\PresenceOf;
-
-class Establishment extends Model
+class Establishment extends \Phalcon\Mvc\Model
 {
 
-    private $establishment_id;
-    private $establishment_name;
-    private $rating;
-    private $city;
-    private $district;
-    private $description;
-    private $address;
-    private $chat_id;
+    /**
+     *
+     * @var integer
+     * @Primary
+     * @Identity
+     * @Column(type="integer", length=11, nullable=false)
+     */
+    protected $establishment_id;
 
+    /**
+     *
+     * @var string
+     * @Column(type="string", length=70, nullable=false)
+     */
+    protected $name;
 
+    /**
+     *
+     * @var string
+     * @Column(type="string", length=100, nullable=true)
+     */
+    protected $description;
 
+    /**
+     * Method to set the value of field establishment_id
+     *
+     * @param integer $establishment_id
+     * @return $this
+     */
+    public function setEstablishmentId($establishment_id)
+    {
+        $this->establishment_id = $establishment_id;
 
-    public function initialize(){
-        $this->hasOne(
-            'chat_id',
-            'Chat',
-            'chat_id',
-            [
-                'foreignKey'=>[
-                    'action'=>Relation::ACTION_CASCADE,
-                ]
-            ]
-        );
-
+        return $this;
     }
 
     /**
-     * @return mixed
+     * Method to set the value of field name
+     *
+     * @param string $name
+     * @return $this
+     */
+    public function setEstablishmentName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Method to set the value of field description
+     *
+     * @param string $description
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Returns the value of field establishment_id
+     *
+     * @return integer
      */
     public function getEstablishmentId()
     {
@@ -48,55 +76,19 @@ class Establishment extends Model
     }
 
     /**
-     * @param mixed $institution_id
-     */
-//    public function setInstitutionId($institution_id)
-//    {
-//        $this->institution_id = $institution_id;
-//    }
-
-    /**
-     * @return mixed
+     * Returns the value of field name
+     *
+     * @return string
      */
     public function getEstablishmentName()
     {
-        return $this->establishment_name;
+        return $this->name;
     }
 
     /**
-     * @param mixed $establishment_name
-     */
-    public function setEstablishmentName($establishment_name)
-    {
-        $this->establishment_name = $establishment_name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRating()
-    {
-        return $this->rating;
-    }
-
-    /**
-     * @param mixed $rating
-     */
-    public function setRating($rating)
-    {
-        $this->rating = $rating;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getChatId()
-    {
-        return $this->chat_id;
-    }
-
-    /**
-     * @return mixed
+     * Returns the value of field description
+     *
+     * @return string
      */
     public function getDescription()
     {
@@ -104,86 +96,44 @@ class Establishment extends Model
     }
 
     /**
-     * @param mixed $description
+     * Initialize method for model.
      */
-    public function setDescription($description)
+    public function initialize()
     {
-        $this->description = $description;
+        $this->setSchema("project_bd");
+        $this->hasMany('establishment_id', 'Branch', 'establishment_id', ['alias' => 'Branch']);
     }
 
     /**
-     * @return mixed
+     * Returns table name mapped in the model.
+     *
+     * @return string
      */
-    public function getAddress()
+    public function getSource()
     {
-        return $this->address;
+        return 'establishment';
     }
 
     /**
-     * @param mixed $address
+     * Allows to query a set of records that match the specified conditions
+     *
+     * @param mixed $parameters
+     * @return Establishment[]|Establishment
      */
-    public function setAddress($address)
+    public static function find($parameters = null)
     {
-        $this->address = $address;
+        return parent::find($parameters);
     }
 
     /**
-     * @return mixed
+     * Allows to query the first record that match the specified conditions
+     *
+     * @param mixed $parameters
+     * @return Establishment
      */
-    public function getCity()
+    public static function findFirst($parameters = null)
     {
-        return $this->city;
-    }
-
-    /**
-     * @param mixed $city
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDistrict()
-    {
-        return $this->district;
-    }
-
-    /**
-     * @param mixed $district
-     */
-    public function setDistrict($district)
-    {
-        $this->district = $district;
-    }
-
-
-
-
-    /**
-     * @param mixed $chat_id
-     */
-    public function setChatId($chat_id)
-    {
-        $this->chat_id = $chat_id;
-    }
-
-    public function validation(){
-        $validator= new Validation();
-        $validator->add(
-            'name',
-            new presenceOf(
-        [
-            'message'=>'The field name can\'t be empty',
-            'cancelOnFail'=> true,
-        ]
-
-        )
-        );
-
-
+        return parent::findFirst($parameters);
     }
 
 }

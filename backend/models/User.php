@@ -123,7 +123,6 @@ class User extends Model
 
     /**
      * Returns the value of field password
-     *
      * @return string
      */
     public function getPassword()
@@ -172,6 +171,15 @@ class User extends Model
                 'min'=>9,
                 'max'=>9,
             ])
+        );
+        $validator->add(
+            'phone',
+            new UniquenessValidator(
+                [
+                    'model' => $this,
+                    'message' => 'phone number unavailable'
+                ]
+            )
         );
         return $this->validate($validator);
     }

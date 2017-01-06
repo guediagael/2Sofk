@@ -7,13 +7,24 @@
  * Time: 15:23
  */
 use Phalcon\Mvc\Controller;
-class UserEventController extends Controller
+class UserEventController extends ControllerBase
 {
-  public function searchEventAction($id_event,$id_user)
-  {
+    /**
+     * search all event organize by a given user
 
+     * @param $id_user
+     */
+  public function searchEventAction($id_user)
+  {
+       $events=UserEvent::find($id_user);
+       return $this->extractData($events);
   }
 
+    /**
+     * add and event organise by a given user
+     * @param $id_event
+     * @param $id_user
+     */
   public function addEventAction($id_event,$id_user)
   {
     $newevent= new UserEvent();

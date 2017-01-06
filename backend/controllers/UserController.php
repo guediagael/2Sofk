@@ -23,10 +23,10 @@ class UserController extends ControllerBase
     /*
      * find all user in the data base
      */
-    public function searchAction()
+    public function searchAction($id=null)
     {
           //$user= $this->dispatcher->getControllerName();
-          $data=User::find();
+          $data=User::find($id);
           return $this->extractData($data);
     }
 
@@ -83,16 +83,17 @@ class UserController extends ControllerBase
      }
 
     /** update the user with the id @link: user_id
-     * @param $user_id
+     * @param $oldnick
      * @param $newnick
      */
-     public function updateAction($user_id,$newnick)
+     public function updatenickAction($oldnick,$newnick)
      {
-       $phql = "update User set nickname=:nick: WHERE user_id=:id:";
+
+       $phql = "update User set nickname=:nick: WHERE nickname=:old:";
        $result=$this->modelsManager->executeQuery($phql,
            [
                "nick" => $newnick,
-               "id" =>$user_id
+               "old" =>$oldnick
            ]
        );
 
@@ -114,22 +115,30 @@ class UserController extends ControllerBase
      * @param $pass
      * @return mixed
      */
- public function registerAction($username,$pass)
+ public function registerAction($username=null,$pass)
  {
-     echo "searching or log in $username";
-     $psq="select nickname from User
-            WHERE  nickname=$username and password=$pass";
-  echo " continue",$pass;
-     $result=$this->modelsManager->executeQuery($psq);
-     echo " nnnnn";
-    return $this->extractData($result);
-     /*if ($result!==null)
-     {
-         return $this->extractData($result);
-     }
-     */
 
-   echo " result";
+     $result=User::findFirstByNickname($username);
+      if($result==null)
+      {
+          echo "user name incorrect";
+          return ;
+      }
+      else
+      {
+          $password=$result->getPassword();
+          if($password==$pass)
+          {
+              echo "connection establish";
+          }
+          else
+              {
+                  echo " incorrect user name and password";
+              }
+      }
+
+
+
  }
 
 }

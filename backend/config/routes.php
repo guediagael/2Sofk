@@ -94,6 +94,15 @@ $router->addPost(
     "/:controller/:action/{sender:[0-9]+}/{chat:[0-9]+}/{msg:[0-9]+}/"
 
 );
+$router->add(
+    "/:controller/:action/{oldnickname:[a-z]+}/{nenwnick:[a-z]+}",
+    array(
+        'controller' => 1,
+         'action'=>2,
+        'oldnicrmame'=>3,
+        'newnickname' =>4
+    )
+);
 //$router->notFound();
 return $router;
 
