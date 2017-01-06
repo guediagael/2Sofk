@@ -19,16 +19,23 @@ $router->add("/", array(
     'action' => 'index'
 ));
 
+//add establishment
+$router->addPost(
+    "/establishment/a/add/{name}/{rating}/{city}/{district}/{description}/{longitude}/{latitude}",
+    "Establishment::add"
+);
+
 //add Event
 $router->addPost(
-    "/event/a/add/{establishment}/{name}/{type}/{date}/{startTime}/{endTime}",
+    "/event/a/add/{establishment}/{name}/{type}/{date}/{startTime}/{endTime}/{description}",
     "Event::add"
 );
 
-//add Institution
+
+//add Branch
 $router->addPost(
-    "/establishment/a/add/{name}/{rating}/{address}/{city}/{district}/{description}",
-    "Establishment::add"
+    "/branch/a/add/{establishment_id}/{city}/{district}/{description}/{longitude}/{latitude}/{rating}",
+    "Branch::add"
 );
 
 //Delete event/Institution
@@ -57,6 +64,22 @@ $router->addGet('/:controller/a/:action',
         'controller'=>1,
         'action'=>2
     ]);
+
+//Edit event
+$router->addPut(
+    "/event/a/update/{id}/{establishment}/{name}/{type}/{date}/{startTime}/{endTime}/{description}",
+    "Event::update");
+
+//Edit establishment
+$router->addPut(
+    "/establishment/a/update/{id}/{name}/{rating}/{address}/{city}/{district}/{description}",
+    "Establishment::update"
+);
+
+$router->AddGet(
+    "/branch/a/find/{establishment_id}/{city}/{district}",
+    "Branch::find"
+);
 //
 ////edit event
 //$router->addPut(

@@ -9,6 +9,8 @@
 use Phalcon\Mvc\Model;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Mvc\Model\Relation;
+use Phalcon\Validation\Validator\Date as DateValidator;
 //use Phalcon\Validation\Validator\Uniqueness as Unique;
 
 class Event extends Model
@@ -21,6 +23,7 @@ class Event extends Model
     private $end;
     private $chat_id;
     private $establishment_id;
+    private $description;
 
 
     public function initialize()
@@ -238,6 +241,25 @@ class Event extends Model
 
         return $data;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+
+
 
 
 

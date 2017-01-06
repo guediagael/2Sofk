@@ -13,6 +13,8 @@ class EstablishmentController extends Controller
 {
     private $response;
 
+    private $dispatcher;
+
 
 
     public function indexAction(){
@@ -21,6 +23,7 @@ class EstablishmentController extends Controller
 
     public function initialize(){
         $this->response= new Response();
+       // $this->dispatcher = new Dispatcher();
     }
 
 
@@ -30,14 +33,20 @@ class EstablishmentController extends Controller
      *
      */
 
-    public function addAction($name,$rating=null,$address,$city,$district=null ,$description=null){
+    public function addAction($name,$rating=null,$city,$district=null,$description, $longitude, $latitude){
 
 
        try{
 
-           $chat= new Chat();
-           $chat->setChatName($name);
-           $chat->save();
+//           $chat= new Chat();
+//           $chat->setChatName($name);
+          // $data = $chat->save();
+          //  $chat->save();
+//           if ($chat->save == false) {
+//               foreach ($chat->getMessages() as $message) {
+//                   echo $message->getMessage();
+//               }
+//           }
            echo "processing";
 
 
@@ -46,14 +55,35 @@ class EstablishmentController extends Controller
 
            $establishment= new Establishment();
            $establishment->setEstablishmentName($name);
-           $establishment->setAddress($address);
-           $establishment->setCity($city);
-           $establishment->setRating($rating);
-           $establishment->setDescription($district);
-           $establishment->setDistrict($description);
-           $establishment->setChatId($chat->getChatId());
+          // $establishment->setAddress($address);
+           //$establishment->setCity($city);
+           //$establishment->setRating($rating);
+           $establishment->setDescription($description);
+           //$establishment->setDistrict($district);
+           //$establishment->setChatId($chat->getChatId());
+          // $establishment->save();
            echo "wb here";
-           $establishment->save();
+
+           if ($establishment->save()==false){
+               foreach ($establishment->getMessages() as $message) {
+                   echo $message->getMessage();
+               }
+           }else{
+
+               $branch = new BranchController();
+               $branch->addAction($establishment->getEstablishmentId(), $city, $district,$description,$longitude,$latitude,$rating);
+
+
+
+//               $this->dispatcher->forward(
+//                   [
+//                       "controller"=>"Branch",
+//                       "action"=>"add",
+//                       "params"=>[ $establishment->getEstablishmentId(),$city,$district,$description,$longitude,$latitude,$rating]
+//                   ]
+//               );
+               //return $this->response->setJsonContent("success");
+           }
        }catch (ErrorException $e){
            echo $e;
 
@@ -62,22 +92,22 @@ class EstablishmentController extends Controller
 
     }
 
-    public function editAction($id,$name=null,$rating=null,$address=null,$city=null,$district=null ,$description=null){
+    public function updateAction($id, $name=null, $rating=null, $address=null, $city=null, $district=null , $description=null){
 
         try{
 
             if ($description==null){
                 echo "sorry you should edit at least the description to achieve this action";
             }else{
-                $institution = Institution::find($id);
+                $establishment = Establishment::findFirst($id);
 
-                $institution->setName($name);
-                $institution->setAddress($address);
-                $institution->setCity($city);
-                $institution->setRating($rating);
-                $institution->setDescription($district);
-                $institution->setDistrict($description);
-                $institution->save();
+                $establishment->setEstablishmentName($name);
+                $establishment->setAddress($address);
+                $establishment->setCity($city);
+                $establishment->setRating($rating);
+                $establishment->setDescription($district);
+                $establishment->setDistrict($description);
+                $establishment->save();
 
                 return $this->response->setJsonContent("succes");
             }
@@ -106,9 +136,18 @@ class EstablishmentController extends Controller
 
     public function deleteAction($id){
 
-        $institution= Institution::find($id);
-        $institution->delete();
-        return $this->response->setJsonContent("success!");
+        echo "got here";
+
+        $establishment= Establishment::findfirst($id);
+      //  $establishment->delete();
+        if ($establishment->delete()==false){
+            foreach ($establishment->getMessages() as $message){
+                echo $message->getMessage();
+            }
+        }else{
+            return $this->response->setJsonContent("success!");
+
+        }
 
 
     }

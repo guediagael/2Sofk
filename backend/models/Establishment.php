@@ -9,34 +9,37 @@
 use Phalcon\Mvc\Model;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Validation\Validator\Uniqueness as UniquenessValidator;
+use Phalcon\Mvc\Model\Relation;
 
 class Establishment extends Model
 {
 
     private $establishment_id;
     private $establishment_name;
-    private $rating;
-    private $city;
-    private $district;
+//    private $rating;
+//    private $city;
+//    private $district;
     private $description;
-    private $address;
-    private $chat_id;
+//    private $address;
+//    private $chat_id;
 
 
 
 
     public function initialize(){
-        $this->hasOne(
-            'chat_id',
-            'Chat',
-            'chat_id',
+
+
+        $this->hasMany(
+            'establishment_id',
+            'Branch',
+            'establishment_id',
             [
                 'foreignKey'=>[
                     'action'=>Relation::ACTION_CASCADE,
                 ]
             ]
         );
-
     }
 
     /**
@@ -71,29 +74,6 @@ class Establishment extends Model
         $this->establishment_name = $establishment_name;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getRating()
-    {
-        return $this->rating;
-    }
-
-    /**
-     * @param mixed $rating
-     */
-    public function setRating($rating)
-    {
-        $this->rating = $rating;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getChatId()
-    {
-        return $this->chat_id;
-    }
 
     /**
      * @return mixed
@@ -111,78 +91,33 @@ class Establishment extends Model
         $this->description = $description;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
 
-    /**
-     * @param mixed $address
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * @param mixed $city
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDistrict()
-    {
-        return $this->district;
-    }
-
-    /**
-     * @param mixed $district
-     */
-    public function setDistrict($district)
-    {
-        $this->district = $district;
-    }
-
-
-
-
-    /**
-     * @param mixed $chat_id
-     */
-    public function setChatId($chat_id)
-    {
-        $this->chat_id = $chat_id;
-    }
 
     public function validation(){
         $validator= new Validation();
         $validator->add(
-            'name',
+            'establishment_name',
+                new UniquenessValidator(
+                [
+                    'model'=>$this,
+                    'message'=>':field must be unique',
+                ]
+            )
+        );
+
+        $validator->add(
+            'establishment_name',
             new presenceOf(
         [
-            'message'=>'The field name can\'t be empty',
+            'message'=>':field can\'t be empty',
             'cancelOnFail'=> true,
         ]
 
         )
         );
 
+
+        return $this->validate($validator);
 
     }
 

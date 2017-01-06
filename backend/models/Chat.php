@@ -8,7 +8,9 @@
  */
 
 use Phalcon\Mvc\Model;
-
+//use Phalcon\Mvc\Model\Relation;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness as UniquenessValidator;
 class Chat extends Model{
 
     private $chat_id;
@@ -17,8 +19,14 @@ class Chat extends Model{
 
     public function initialize()
     {
-        $this->belongsTo('chat_id','Establishment','chat_id');
-        $this->belongsTo('chat_id','Event','chat_id');
+        $this->belongsTo('chat_id','Branch','chat_id',
+            [
+                'foreignKey'=> true
+            ]);
+//        $this->belongsTo('chat_id','Event','chat_id',
+//            [
+//                'foreignKey'=> true
+//            ]);
 
     }
 
@@ -53,6 +61,25 @@ class Chat extends Model{
     public function setChatName($chat_name)
     {
         $this->chat_name = $chat_name;
+    }
+
+
+    public function validation(){
+        $validator= new Validation();
+        $validator->add(
+            'chat_name',
+                new UniquenessValidator([
+                        'model'=>$this,
+                        'message'=>'Sorry a this already exist for it',
+                ]
+
+                )
+
+
+
+        );
+
+        return $this->validate($validator);
     }
 
 
