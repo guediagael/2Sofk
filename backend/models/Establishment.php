@@ -1,16 +1,16 @@
 <?php
 
-class Establishment extends \Phalcon\Mvc\Model
-{
-
-    /**
-     *
-     * @var integer
-     * @Primary
-     * @Identity
-     * @Column(type="integer", length=11, nullable=false)
-     */
-    protected $establishment_id;
+/**
+ * Created by PhpStorm.
+ * User: TheLetch
+ * Date: 13/12/2016
+ * Time: 17:56
+ */
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Validation\Validator\Uniqueness as UniquenessValidator;
+use Phalcon\Mvc\Model\Relation;
 
     /**
      *
@@ -49,6 +49,19 @@ class Establishment extends \Phalcon\Mvc\Model
     {
         $this->name = $name;
 
+    public function initialize(){
+
+
+        $this->hasMany(
+            'establishment_id',
+            'Branch',
+            'establishment_id',
+            [
+                'foreignKey'=>[
+                    'action'=>Relation::ACTION_CASCADE,
+                ]
+            ]
+        );
         return $this;
     }
 
@@ -134,6 +147,37 @@ class Establishment extends \Phalcon\Mvc\Model
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
+    }
+
+}
+
+
+    public function validation(){
+        $validator= new Validation();
+        $validator->add(
+            'establishment_name',
+                new UniquenessValidator(
+                [
+                    'model'=>$this,
+                    'message'=>':field must be unique',
+                ]
+            )
+        );
+
+        $validator->add(
+            'establishment_name',
+            new presenceOf(
+        [
+            'message'=>':field can\'t be empty',
+            'cancelOnFail'=> true,
+        ]
+
+        )
+        );
+
+
+        return $this->validate($validator);
+
     }
 
 }

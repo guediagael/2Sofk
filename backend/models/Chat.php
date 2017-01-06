@@ -13,8 +13,8 @@ use Phalcon\Validation\Validator\Uniqueness as UniquenessValidator;
 
 class Chat extends Model{
 
-    protected $chat_id;
-    protected $chat_name;
+    private $chat_id;
+    private $chat_name;
 
 
     public function initialize()
@@ -74,5 +74,25 @@ class Chat extends Model{
      );
      return $this->validate($validator);
  }
+
+    public function validation(){
+        $validator= new Validation();
+        $validator->add(
+            'chat_name',
+                new UniquenessValidator([
+                        'model'=>$this,
+                        'message'=>'Sorry a this already exist for it',
+                ]
+
+                )
+
+
+
+        );
+
+        return $this->validate($validator);
+    }
+
+
 
 }

@@ -38,38 +38,60 @@ class EventController extends Controller
      * @Post("/events/new")
      *
      */
-    public function addAction($establishment_id, $eventName, $type, $date, $startTime, $endTime){
+    public function addAction($establishment_id, $eventName, $type, $date, $startTime, $endTime,$description){
 
         try{
 
-
-            if (Establishment::find($establishment_id)!=null) {
+        echo "process";
+            //if (Establishment::find($establishment_id)!=null) {
                 $chat = new Chat();
                 $chat->setChatName($eventName);
-                $chat->save();
+               // $chat->save();
+            if ($chat->save()==false){
+                foreach ($chat->getMessages() as $msg){
+                    echo $msg->getMessage();
+                }
+            }
 
+            echo "after save";
                 $event = new Event();
                 $event->setEventName($eventName);
                 $event->setType($type);
                 $event->setDate($date);
                 $event->setBegin($startTime);
                 $event->setEnd($endTime);
+                $event->setDescription($description);
 
 
                 $event->setEstablishmentId($establishment_id);
 
                 $event->setChatId($chat->getChatId());
 
-                $event->save();
+              //  $event->save();
+            if ($event->save()==false){
+                foreach ($event->getMessages() as $msg){
+                    echo $msg->getMessage();
+                }
+            }
 
                 $organizator= new EventOrganizator();
                 $organizator->setEventId($event->getEventId());
                 $organizator->setEstablishmentId($event->getEstablishmentId());
-                $organizator->save();
-            }else{
-                echo "somin' wrong";
+               // $organizator->save();
+
+            if ($organizator->save()==false){
+                foreach ($organizator->getMessages() as $msg){
+                    echo $msg->getMessage();
+                }
             }
+//            }else{
+//                echo "somin' wrong";
+//            }
+
             //echo "processing";
+
+
+
 
         }catch (ErrorException $e){
             echo $e;
@@ -82,15 +104,22 @@ class EventController extends Controller
      * @Put("/events/edit/{id}")
      */
 
-    public function updateAction($id,$eventName,$type,$date,$startTime,$endTime){
+    public function updateAction($id,$eventName,$type,$date,$startTime,$endTime,$description){
 
+        echo 'hi';
         $event=Event::findFirst($id);
         $event->setEventName($eventName);
         $event->setType($type);
         $event->setDate($date);
         $event->setBegin($startTime);
         $event->setEnd($endTime);
-        $event->save();
+        $event->setDescription($description);
+       // $event->save();
+        if ($event->save()==false){
+            foreach ($event->getMessages() as $msg){
+                echo $msg->getMessage();
+            }
+        }
 
     }
 
@@ -125,7 +154,15 @@ class EventController extends Controller
     public function deleteAction($id){
 
         $event = Event::findFirst($id);
-        $event->delete();
+
+        if ($event->delete()==false){
+            foreach ($event->getMessages() as $message){
+                echo $message->getMessage();
+            }
+        }else{
+            return $this->response->setJsonContent("success");
+        }
+
     }
 
     /**
