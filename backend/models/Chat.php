@@ -19,10 +19,8 @@ class Chat extends Model{
 
     public function initialize()
     {
-        $this->belongsTo('chat_id','Branch','chat_id',
-            [
-                'foreignKey'=> true
-            ]);
+        $this->belongsTo('chat_id','Branch','chat_id'
+            );
 //        $this->belongsTo('chat_id','Event','chat_id',
 //            [
 //                'foreignKey'=> true
@@ -70,7 +68,7 @@ class Chat extends Model{
             'chat_name',
                 new UniquenessValidator([
                         'model'=>$this,
-                        'message'=>'Sorry a this already exist for it',
+                        'message'=>'Sorry a chat this already exist for it',
                 ]
 
                 )

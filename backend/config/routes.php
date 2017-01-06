@@ -76,9 +76,22 @@ $router->addPut(
     "Establishment::update"
 );
 
+//Find a branch
 $router->AddGet(
     "/branch/a/find/{establishment_id}/{city}/{district}",
     "Branch::find"
+);
+
+//Edit a branch
+$router->AddPut(
+    "/branch/a/edit/{establishment_id}/{city}/{district}/{description}/{longitude}/{latitude}/{rating}",
+    "Branch::edit"
+);
+
+//Delete a branch with it's chat
+$router->AddDelete(
+    "/branch/a/delete/{establishment_id}/{city}/{district}",
+    "Branch::delete"
 );
 //
 /*
