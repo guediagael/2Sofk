@@ -11,13 +11,15 @@ use Phalcon\Validation;
 use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\Uniqueness as UniquenessValidator;
 use Phalcon\Mvc\Model\Relation;
-
+class Establishment extends Model
+{
     /**
      *
      * @var string
      * @Column(type="string", length=70, nullable=false)
      */
     protected $name;
+    protected $establishment_id;
 
     /**
      *
@@ -36,7 +38,6 @@ use Phalcon\Mvc\Model\Relation;
     {
         $this->establishment_id = $establishment_id;
 
-        return $this;
     }
 
     /**
@@ -48,6 +49,7 @@ use Phalcon\Mvc\Model\Relation;
     public function setEstablishmentName($name)
     {
         $this->name = $name;
+    }
 
     public function initialize(){
 
@@ -62,6 +64,8 @@ use Phalcon\Mvc\Model\Relation;
                 ]
             ]
         );
+        $this->setSchema("project_bd");
+        $this->hasMany('establishment_id', 'Branch', 'establishment_id', ['alias' => 'Branch']);
         return $this;
     }
 
@@ -108,14 +112,7 @@ use Phalcon\Mvc\Model\Relation;
         return $this->description;
     }
 
-    /**
-     * Initialize method for model.
-     */
-    public function initialize()
-    {
-        $this->setSchema("project_bd");
-        $this->hasMany('establishment_id', 'Branch', 'establishment_id', ['alias' => 'Branch']);
-    }
+
 
     /**
      * Returns table name mapped in the model.
@@ -148,8 +145,6 @@ use Phalcon\Mvc\Model\Relation;
     {
         return parent::findFirst($parameters);
     }
-
-}
 
 
     public function validation(){
