@@ -16,7 +16,6 @@ class Chat extends Model{
     private $chat_id;
     private $chat_name;
 
-
     public function initialize()
     {
         $this->belongsTo('chat_id','Branch','chat_id'
