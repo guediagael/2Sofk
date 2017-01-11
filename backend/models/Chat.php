@@ -8,9 +8,9 @@
  */
 
 use Phalcon\Mvc\Model;
+//use Phalcon\Mvc\Model\Relation;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness as UniquenessValidator;
-
 class Chat extends Model{
 
     private $chat_id;
@@ -57,23 +57,25 @@ class Chat extends Model{
         $this->chat_name = $chat_name;
     }
 
-    /**
-     * chat validation
-     */
- public function Validation()
- {
-     $validator=new Validation();
-     $validator->add(
-         'chat_name',
-         new UniquenessValidator(
-             [
-                 'model' => $this,
-                 'message' => 'chat name unavailable'
-             ]
-         )
-     );
-     return $this->validate($validator);
- }
+
+    public function validation(){
+        $validator= new Validation();
+        $validator->add(
+            'chat_name',
+                new UniquenessValidator([
+                        'model'=>$this,
+                        'message'=>'Sorry a chat this already exist for it',
+                ]
+
+                )
+
+
+
+        );
+
+        return $this->validate($validator);
+    }
+
 
 
 }
