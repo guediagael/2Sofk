@@ -118,12 +118,14 @@ class Event extends Model
      */
     public function setDate($date)
     {
-//        $selectedDate = strtotime($date);
-//        if (date_diff(date(),date('Y-m-d',$selectedDate))>=0){
+        $eventDate = new DateTime($date);
+        $currentDate = new DateTime('now');
+        if ($currentDate<$eventDate){
             $this->date = $date;
-//        }else{
-//            json_encode('please select a latter date') ;
-//        }
+
+        } else{
+            json_encode('please select a latter date') ;
+        }
 
 
     }
@@ -159,8 +161,18 @@ class Event extends Model
     public function setEnd($end)
     {
 
+        $eventDate = $this->date;
+        $separator= " ";
+
+        $startTime = new DateTime($eventDate.$separator.$this->begin);
+        $endTime = new DateTime($eventDate.$separator.$end);
         //TODO: compare the end and the begin time
-        $this->end = $end;
+        if ($endTime>$startTime){
+            $this->end = $end;
+
+        }else{
+            return json_encode("The end time should be later than the beginning ");
+        }
 
 
     }

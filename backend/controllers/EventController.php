@@ -3,120 +3,101 @@ use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Di;
 use Phalcon\Http\Response;
-
-//use Phalcon\Mvc\Router\Annotations as RouterAnnotations;
-
-/*
-     * @RoutePrefix("/tusofk/events")
-     */
+use Phalcon\Mvc\Resultset;
+use Phalcon\Mvc\Model\Query;
 
 class EventController extends Controller
 {
 
     private $response;
 
-  //  private $id;
 
-   // private $params;
-
-    /**
-     * @Get("/")
-     */
-
-    public function indexAction(){
+    public function indexAction()
+    {
 
     }
 
     public function initialize()
     {
-        $this->response=new Response();
-      //  $this->id= $this->dispatcher->getParam('id');
+        $this->response = new Response();
+
 
     }
 
-    /**
-     * @Post("/events/new")
-     *
-     */
-    public function addAction($establishment_id, $eventName, $type, $date, $startTime, $endTime,$description){
+    public function addAction($establishment_id, $eventName, $type, $date, $startTime, $endTime, $description)
+    {
+       // echo "how?";
+        $chat = new Chat();
+        $chat->setChatName($eventName);
+        if ($chat->save()===false) {
 
-        try{
+            $this->response->setJsonContent([
+                "status"=>"ChatCreation error",
+                "data"=>$chat->getMessages(),
+            ]);
 
-        echo "process";
-            //if (Establishment::find($establishment_id)!=null) {
-                $chat = new Chat();
-                $chat->setChatName($eventName);
-               // $chat->save();
-            if ($chat->save()==false){
-                foreach ($chat->getMessages() as $msg){
-                    echo $msg->getMessage();
-                }
-            }
+        } else {
+            $event = new Event();
+            $event->setEventName($eventName);
+            $event->setType($type);
+            $event->setDate($date);
+            $event->setBegin($startTime);
+            $event->setEnd($endTime);
+            $event->setDescription($description);
+            $event->setEstablishmentId($establishment_id);
+            $event->setChatId($chat->getChatId());
 
-            echo "after save";
-                $event = new Event();
-                $event->setEventName($eventName);
-                $event->setType($type);
-                $event->setDate($date);
-                $event->setBegin($startTime);
-                $event->setEnd($endTime);
-                $event->setDescription($description);
-
-
-                $event->setEstablishmentId($establishment_id);
-
-                $event->setChatId($chat->getChatId());
-
-              //  $event->save();
-            if ($event->save()==false){
-                foreach ($event->getMessages() as $msg){
-                    echo $msg->getMessage();
-                }
-            }
-
-                $organizator= new EventOrganizator();
+            if ($event->create() === false) {
+                $chat->delete();
+                $this->response->setJsonContent([
+                    "status"=>"eventCreation error",
+                    "data"=>$event->getMessages(),
+                ]);
+            } else {
+                $organizator = new EventOrganizator();
                 $organizator->setEventId($event->getEventId());
                 $organizator->setEstablishmentId($event->getEstablishmentId());
-               // $organizator->save();
 
-            if ($organizator->save()==false){
-                foreach ($organizator->getMessages() as $msg){
-                    echo $msg->getMessage();
+                if ($organizator->create()===false) {
+                    $chat->delete();
+                    $event->delete();
+                   // $this->response->setJsonContent($organizator->getMessages());
+                    $this->response->setJsonContent([
+                        "status"=>"OrganizatorCreation error",
+                        "data"=>$organizator->getMessages(),
+                    ]);
+
+                }else{
+                    $this->response->setJsonContent([
+                        "status"=>"OK",
+                        "data"=>"Event Added"
+                    ]);
                 }
             }
-//            }else{
-//                echo "somin' wrong";
-//            }
-
-            //echo "processing";
 
 
-
-
-        }catch (ErrorException $e){
-            echo $e;
         }
 
-
+        return $this->response;
     }
 
-    /**
-     * @Put("/events/edit/{id}")
-     */
 
-    public function updateAction($id,$eventName,$type,$date,$startTime,$endTime,$description){
+
+
+    public function updateAction($id, $eventName, $type, $date, $startTime, $endTime, $description)
+    {
 
         echo 'hi';
-        $event=Event::findFirst($id);
+        $event = Event::findFirst($id);
         $event->setEventName($eventName);
         $event->setType($type);
         $event->setDate($date);
         $event->setBegin($startTime);
         $event->setEnd($endTime);
         $event->setDescription($description);
-       // $event->save();
-        if ($event->save()==false){
-            foreach ($event->getMessages() as $msg){
+        // $event->save();
+        if ($event->save() == false) {
+            foreach ($event->getMessages() as $msg) {
                 echo $msg->getMessage();
             }
         }
@@ -126,53 +107,59 @@ class EventController extends Controller
     /**
      * @Get("events/info/{id}")
      */
-    public function getInfoAction($id){
-      //  $event = Event::findFirst($this->id);
+    public function getInfoAction($id)
+    {
+        //  $event = Event::findFirst($this->id);
         $event = Event::findFirst($id);
 
-       return $this->response->setJsonContent($event);
+        return $this->response->setJsonContent($event);
 
     }
 
     /**
      * @Get("events/all")
      */
-    public function getAllAction(){
+    public function getAllAction()
+    {
 
         echo "Test";
-      //  return printf("Test test");
-       // return  new response(json_encode(Event::find()));
-        $data= Event::find();
+        //  return printf("Test test");
+        // return  new response(json_encode(Event::find()));
+        $data = Event::find();
         return $this->response->setJsonContent($data);
-       // return $this->response;
+        // return $this->response;
     }
 
 
     /**
      * @Delete("events/delete/{id}")
      */
-    public function deleteAction($id){
+    public function deleteAction($id)
+    {
 
         $event = Event::findFirst($id);
 
-        if ($event->delete()==false){
-            foreach ($event->getMessages() as $message){
+        if ($event->delete() == false) {
+            foreach ($event->getMessages() as $message) {
                 echo $message->getMessage();
             }
-        }else{
+        } else {
             return $this->response->setJsonContent("success");
         }
-
     }
 
-    /**
-     * @Get("events/search/{name}")
-     */
-    public function findByNameAction($name){
-        return json_encode(Event::find($name));
 
-    }
+        /**
+         * @Get("events/search/{name}")
+         */
+        public  function findByNameAction($name)
+        {
+            return json_encode(Event::find($name));
 
+        }
 
 
 }
+
+
+

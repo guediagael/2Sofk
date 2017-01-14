@@ -15,6 +15,8 @@ return new Config(
             'host'=>'localhost',
             'username'=>'root',
             'password'=>'',
+            'username'=>'guediagael',
+            'password'=>'emmanuelgael',
             'dbname'=>'2sofk',
         ],
 

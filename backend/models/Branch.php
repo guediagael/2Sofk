@@ -1,5 +1,6 @@
 <?php
 
+
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Relation;
 use Phalcon\Validation;
@@ -162,21 +163,74 @@ class Branch extends Model
 
     /**
      * @return mixed
-     */
+
     public function getChatId()
     {
         return $this->chat_id;
     }
 
-    /**
-     * @param mixed $chat_id
-     */
+
     public function setChatId($chat_id)
     {
         $this->chat_id = $chat_id;
     }
 
 
+    /**
+     * Returns table name mapped in the model.
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return 'branch';
+    }
+
+    /**
+     * Allows to query a set of records that match the specified conditions
+     *
+     * @param mixed $parameters
+     * @return Branch[]|Branch
+     */
+    public static function find($parameters = null)
+    {
+        return parent::find($parameters);
+    }
+
+    /**
+     * Allows to query the first record that match the specified conditions
+     *
+     * @param mixed $parameters
+     * @return Branch
+     */
+    public static function findFirst($parameters = null)
+    {
+        return parent::findFirst($parameters);
+    }
+
+    /**
+     *
+     */
+     public function Validation()
+     {
+         $validator=new Validation();
+         $validator->add(
+             'establishment_id',
+             new ValidatorUniqueness(
+                 [
+                     'model' => $this,
+                     'message' => 'incorrect data'
+                 ]
+             )
+         );
+         return $this->validate($validator);
+     }
 
 
 }
+
+
+
+
+
+

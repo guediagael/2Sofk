@@ -9,6 +9,10 @@ use Phalcon\Http\Response;
  * Date: 31/12/2016
  * Time: 11:47
  */
+
+
+
+
 class BranchController extends Controller
 {
     private $response;
@@ -18,6 +22,11 @@ class BranchController extends Controller
     {
 
     }
+
+
+
+
+
     public function initialize(){
         $this->response = new Response();
 
@@ -25,7 +34,7 @@ class BranchController extends Controller
 
     public function addAction($establishment_id, $city, $district, $description, $longitude=null, $latitude=null, $rating=null)
     {
-        //TODO: Check what's wrong with chat creation here
+
 
         $establishmentName = Establishment::findFirst($establishment_id)->getEstablishmentName();
         $separator = "|";
@@ -36,17 +45,16 @@ class BranchController extends Controller
 
 
         if ($chat->save()===false){
-//           foreach ($chat->getMessages() as $message){
-//               echo $message->getMessage();
+
            $this->response->setJsonContent([
                "status"=>"ERROR",
                "data"=>$chat->getMessages(),
            ]);
-        //   }
+
        }else{
 
 
-           //   echo "up to branch";
+
            $branch = new Branch();
            $branch->setEstablishmentId($establishment_id);
            $branch->setCity($city);
@@ -119,7 +127,7 @@ class BranchController extends Controller
 
     public function findAction($establishment_id, $city, $district)
     {
-        echo "here";
+
 
         $branch= Branch::findFirst(
             [
@@ -202,4 +210,8 @@ class BranchController extends Controller
         return $this->response;
     }
 
+
+
 }
+
+
