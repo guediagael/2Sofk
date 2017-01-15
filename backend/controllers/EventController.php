@@ -9,6 +9,7 @@ use Phalcon\Mvc\Model\Query;
 class EventController extends Controller
 {
 
+
     private $response;
 
 
@@ -26,7 +27,7 @@ class EventController extends Controller
 
     public function addAction($establishment_id, $eventName, $type, $date, $startTime, $endTime, $description)
     {
-       // echo "how?";
+
         $chat = new Chat();
         $chat->setChatName($eventName);
         if ($chat->save()===false) {
@@ -61,7 +62,6 @@ class EventController extends Controller
                 if ($organizator->create()===false) {
                     $chat->delete();
                     $event->delete();
-                   // $this->response->setJsonContent($organizator->getMessages());
                     $this->response->setJsonContent([
                         "status"=>"OrganizatorCreation error",
                         "data"=>$organizator->getMessages(),
@@ -87,20 +87,31 @@ class EventController extends Controller
     public function updateAction($id, $eventName, $type, $date, $startTime, $endTime, $description)
     {
 
-        echo 'hi';
+
         $event = Event::findFirst($id);
-        $event->setEventName($eventName);
-        $event->setType($type);
-        $event->setDate($date);
-        $event->setBegin($startTime);
-        $event->setEnd($endTime);
-        $event->setDescription($description);
-        // $event->save();
-        if ($event->save() == false) {
-            foreach ($event->getMessages() as $msg) {
-                echo $msg->getMessage();
+
+        if ($event!=false){
+            $event->setEventName($eventName);
+            $event->setType($type);
+            $event->setDate($date);
+            $event->setBegin($startTime);
+            $event->setEnd($endTime);
+            $event->setDescription($description);
+
+            if ($event->update() === false) {
+                $this->response->setJsonContent([
+                    "status"=>"ERROR",
+                    "data"=>$event->getMessages()
+                ]);
             }
+        }else{
+            $this->response->setJsonContent([
+                "status"=>"NOT FOUND",
+                "data"=>"The event you try to access doesn't exist"
+            ]);
         }
+
+        return $this->response;
 
     }
 
@@ -109,10 +120,21 @@ class EventController extends Controller
      */
     public function getInfoAction($id)
     {
-        //  $event = Event::findFirst($this->id);
-        $event = Event::findFirst($id);
 
-        return $this->response->setJsonContent($event);
+        $event = Event::findFirst($id);
+        if ($event===false){
+            $this->response->setJsonContent([
+                "status"=>"NOT FOUND",
+                "data"=>"The event you're looking for doesn't exist"
+            ]);
+        }else{
+            $this->response->setJsonContent([
+                "status"=>"FOUND",
+                "data"=>$event
+            ]);
+        }
+
+        return $this->response;
 
     }
 
@@ -139,13 +161,30 @@ class EventController extends Controller
 
         $event = Event::findFirst($id);
 
-        if ($event->delete() == false) {
-            foreach ($event->getMessages() as $message) {
-                echo $message->getMessage();
+        if ($event!=false){
+            if ($event->delete() === false) {
+                $this->response->setJsonContent([
+                    "status"=>"ERROR!!",
+                    "data"=>$event->getMessages(),
+                ]);
+            } else {
+                $this->response->setJsonContent([
+                    "status"=>"OK",
+                    "data"=>"Event deleted"
+
+
+                ]);
             }
-        } else {
-            return $this->response->setJsonContent("success");
+        }else{
+            $this->response->setJsonContent(
+                [
+                    "status"=>"NOT FOUND",
+                    "data"=>"The event you try to delete doesn't exist"
+                ]
+            );
         }
+
+        return $this->response;
     }
 
 

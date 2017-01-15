@@ -176,7 +176,7 @@ class BranchController extends Controller
             ]
         );
 
-        if ($branch===false){
+        if ($branch->delete()===false){
             $this->response->setJsonContent(
                 [
                     "status"=>"the branch you want to delete doesn't exist"
