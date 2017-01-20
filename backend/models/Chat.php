@@ -32,13 +32,6 @@ class Chat extends Model{
         return $this->chat_id;
     }
 
-    /**
-     * @param mixed $chat_id
-     */
-//    public function setChatId($chat_id)
-//    {
-//        $this->chat_id = $chat_id;
-//    }
 
     /**
      * @return mixed

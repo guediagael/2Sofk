@@ -13,9 +13,11 @@ return new Config(
         'database'=>[
             'adapter'=>'Mysql',
             'host'=>'localhost',
-            'username'=>'yannick',
-            'password'=>'admin',
-            'dbname'=>'project_bd',
+            'username'=>'root',
+            'password'=>'',
+            'username'=>'guediagael',
+            'password'=>'emmanuelgael',
+            'dbname'=>'2sofk',
         ],
 
         'application'=>[

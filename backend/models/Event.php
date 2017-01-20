@@ -83,7 +83,7 @@ class Event extends Model
     {
         if (strlen($event_name)<5 && strlen($event_name)>25){
             throw new InvalidArgumentException(
-                 json_encode("Even too short or too long")
+                 json_encode("Event name too short or too long")
             );
         }
         $this->event_name = $event_name;
@@ -118,12 +118,13 @@ class Event extends Model
      */
     public function setDate($date)
     {
-//        $selectedDate = strtotime($date);
-//        if (date_diff(date(),date('Y-m-d',$selectedDate))>=0){
+        $eventDate = new DateTime($date);
+        $currentDate = new DateTime('now');
+        if ($currentDate<$eventDate){
             $this->date = $date;
-//        }else{
-//            json_encode('please select a latter date') ;
-//        }
+
+        }
+
 
 
     }
@@ -159,8 +160,17 @@ class Event extends Model
     public function setEnd($end)
     {
 
-        //TODO: compare the end and the begin time
-        $this->end = $end;
+        $eventDate = $this->date;
+        $separator= " ";
+
+        $startTime = new DateTime($eventDate.$separator.$this->begin);
+        $endTime = new DateTime($eventDate.$separator.$end);
+
+        if ($endTime>$startTime){
+            $this->end = $end;
+
+        }
+
 
 
     }
@@ -223,6 +233,7 @@ class Event extends Model
 
         );
 
+        return $this->validate($validator);
        //TODO: add a list of event type to the validator
     }
 

@@ -67,7 +67,7 @@ $router->addGet('/:controller/a/:action',
 
 //Edit event
 $router->addPut(
-    "/event/a/update/{id}/{establishment}/{name}/{type}/{date}/{startTime}/{endTime}/{description}",
+    "/event/a/update/{id}/{name}/{type}/{date}/{startTime}/{endTime}/{description}",
     "Event::update");
 
 //Edit establishment
