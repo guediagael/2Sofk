@@ -87,6 +87,7 @@ class EventController extends Controller
     public function updateAction($id, $eventName, $type, $date, $startTime, $endTime, $description)
     {
 
+        echo "test";
 
         $event = Event::findFirst($id);
 
@@ -99,9 +100,13 @@ class EventController extends Controller
             $event->setDescription($description);
 
             if ($event->update() === false) {
+                $msg="";
+                foreach ($event->getMessages() as $message) {
+                    $msg = $msg."" . $message;
+                }
                 $this->response->setJsonContent([
                     "status"=>"ERROR",
-                    "data"=>$event->getMessages()
+                    "data"=>$msg//$event->getMessages()
                 ]);
             }
         }else{
